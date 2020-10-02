@@ -44,8 +44,9 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
+        /** @var User $user */
         $user = $this->em->getRepository(User::class)->findByToken($credentials);
-        if (!$user) {
+        if (!$user || !$user->isFreshToken()) {
             return null;
         }
         return $userProvider->loadUserByUsername($user->getUserName() ?? '');
@@ -72,7 +73,6 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
 
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $providerKey)
     {
-        return true;
     }
 
     public function supportsRememberMe()

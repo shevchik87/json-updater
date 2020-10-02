@@ -150,4 +150,9 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function isFreshToken(): bool
+    {
+        return $this->until > time();
+    }
 }

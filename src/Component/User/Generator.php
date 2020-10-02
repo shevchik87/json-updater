@@ -11,9 +11,4 @@ class Generator
     {
         return md5(Uuid::uuid1()->toString());
     }
-
-    public function getNewUUID()
-    {
-        return Uuid::uuid1()->toString();
-    }
 }
