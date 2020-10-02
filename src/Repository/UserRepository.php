@@ -1,7 +1,9 @@
 <?php
+declare(strict_types = 1);
 
 namespace App\Repository;
 
+use App\Component\User\NewTokenDto;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -47,5 +49,25 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult()
             ;
+    }
+
+    /**
+     * @param NewTokenDto $dto
+     * @return \Doctrine\ORM\QueryBuilder
+     *
+     */
+    public function updateToken(NewTokenDto $dto)
+    {
+        $qb = $this->createQueryBuilder('u');
+        $q = $qb
+            ->update('App\Entity\User', 'u')
+            ->set('u.apiToken', '?1')
+            ->set('u.until', '?2')
+            ->where('u.login = ?3')
+            ->setParameter(1, $dto->getToken())
+            ->setParameter(2, $dto->getUntil())
+            ->setParameter(3, $dto->getLogin())
+            ->getQuery();
+        $q->execute();
     }
 }
