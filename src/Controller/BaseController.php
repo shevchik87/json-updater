@@ -29,6 +29,10 @@ class BaseController extends AbstractController
      */
     public function getUserEntity() :?User
     {
+        if (!$this->getUser()) {
+            return null;
+        }
+
         return $this->em->getRepository(User::class)
             ->findByUserName($this->getUser()->getUsername());
     }

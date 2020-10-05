@@ -36,10 +36,16 @@ class DocumentController extends BaseController
      */
     public function getOneDocumentAction(string $id)
     {
+        /** @var Document $doc */
         $doc = $this->getDoctrine()->getRepository(Document::class)->find($id);
         if (!$doc) {
             return new JsonResponse(null, 404);
         }
+
+        if (!$doc->isPublished()) {
+            return new JsonResponse(null, 403);
+        }
+
         return $this->response($doc);
     }
 
