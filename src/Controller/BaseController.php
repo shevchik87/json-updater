@@ -43,6 +43,11 @@ class BaseController extends AbstractController
         return null;
     }
 
+    /**
+     * @param $data
+     * @param int $options
+     * @return JsonResponse
+     */
     protected function response($data, $options = 0)
     {
         $d = json_encode(['document' => $data], $options);

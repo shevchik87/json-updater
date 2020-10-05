@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\Controller;
 
 use App\Component\Document\DocumentManager;
+use App\Entity\Document;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,7 +36,10 @@ class DocumentController extends BaseController
      */
     public function getOneDocumentAction(string $id)
     {
-        $doc = $this->getDoctrine()->getRepository(DocumentManager::class)->find($id);
+        $doc = $this->getDoctrine()->getRepository(Document::class)->find($id);
+        if (!$doc) {
+            return new JsonResponse(null, 404);
+        }
         return $this->response($doc);
     }
 
@@ -51,7 +55,6 @@ class DocumentController extends BaseController
             return new JsonResponse("Payload is required", 400);
         }
 
-
         $document = $manager->updateDocument($id, $payload);
 
         return $this->response($document);
@@ -62,9 +65,9 @@ class DocumentController extends BaseController
      * @param string $id
      * @return JsonResponse
      */
-    public function publishAction(string $id)
+    public function publishAction(DocumentManager $manager, string $id)
     {
-
-        return new JsonResponse("ok");
+        $document = $manager->publishDocument($id);
+        return $this->response($document);
     }
 }

@@ -50,6 +50,10 @@ class Document implements \JsonSerializable
      */
     private $userId;
 
+    public function isPublished()
+    {
+        return $this->status == self::STATUS_PUBLISHED;
+    }
     /**
      * @return int
      */
