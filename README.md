@@ -2,11 +2,22 @@
 
 Склонить репозиторий
 
-Перейти в папку с проектом и запустить ```docker-compose up```
+* Перейти в папку с проектом и запустить ```docker-compose up -d```
 
-Запустить комманду миграции
+* Запустить комманду composer install
+```docker-compose exec app composer install```
+
+* Запустить комманду миграции
 
 ```docker-compose exec app php bin/console doctrine:migrations:migrate --no-interaction```
+
+
+* Доступные юзеры для для эндпоинта логина
+``root``
+
+``user``
+
+
 
 ## Что сделано?
 
@@ -17,6 +28,8 @@
 * ```PATCH /api/v1/document/{id}``` - edit document
 
 * ```POST /api/v1/document/{id}/publish``` - publish document
+
+* ```PATCH /api/v1/login``` - get new token
 
 
 If document is not found, 404 NOT Found must be returned
