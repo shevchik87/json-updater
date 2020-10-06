@@ -4,6 +4,8 @@
 
 * Перейти в папку с проектом и запустить ```docker-compose up -d```
 
+* Вебсервер будет доступен по адресу 127.0.0.1:8000
+
 * Запустить комманду composer install
 ```docker-compose exec app composer install```
 
